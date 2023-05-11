@@ -4,3 +4,11 @@ node_modules
 /build
 /public/build
 .env
+/.idea/.gitignore
+/.idea/aws.xml
+/.idea/modules.xml
+/.idea/prettier.xml
+/.idea/inspectionProfiles/Project_Default.xml
+/.idea/remix-mantine.iml
+/.idea/vcs.xml
+/.idea/jsLinters/eslint.xml
