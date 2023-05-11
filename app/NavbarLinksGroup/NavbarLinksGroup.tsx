@@ -54,8 +54,8 @@ const useStyles = createStyles((theme) => ({
       backgroundColor:
         theme.colorScheme === "dark"
           ? theme.colors.dark[7]
-          : theme.colors.gray[0],
-      color: theme.colorScheme === "dark" ? theme.white : theme.black,
+          : theme.colors.gray[2],
+      // color: theme.colorScheme === "dark" ? theme.white : theme.black,
     },
   },
 
