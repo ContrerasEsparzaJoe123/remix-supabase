@@ -30,7 +30,7 @@ export default function AppShellDemo() {
       }}
       navbarOffsetBreakpoint="sm"
       asideOffsetBreakpoint="sm"
-      navbar={<NavbarNested />}
+      navbar={<NavbarNested opened={opened} />}
       header={
         <Header height={{ base: 50, md: 70 }} bg={theme.colors.gray[0]} p="md">
           <div

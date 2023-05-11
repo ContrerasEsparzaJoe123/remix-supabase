@@ -8,13 +8,12 @@ import {
   UnstyledButton,
   createStyles,
   rem,
+  NavLink,
 } from "@mantine/core";
 import {
   IconCalendarStats,
   IconChevronLeft,
   IconChevronRight,
-  IconLock,
-  IconNotes,
 } from "@tabler/icons-react";
 
 const useStyles = createStyles((theme) => ({
@@ -60,6 +59,20 @@ const useStyles = createStyles((theme) => ({
     },
   },
 
+  linkActive: {
+    fontWeight: 500,
+    borderLeftColor:
+      theme.colors[theme.primaryColor][theme.colorScheme === "dark" ? 6 : 7],
+    color:
+      theme.colors[theme.primaryColor][theme.colorScheme === "dark" ? 2 : 7],
+
+    "&, &:hover": {
+      backgroundColor:
+        theme.colorScheme === "dark"
+          ? theme.fn.rgba(theme.colors[theme.primaryColor][9], 0.25)
+          : theme.colors[theme.primaryColor][0],
+    },
+  },
   chevron: {
     transition: "transform 200ms ease",
   },
@@ -78,11 +91,27 @@ export function LinksGroup({
   initiallyOpened,
   links,
 }: LinksGroupProps) {
-  const { classes, theme } = useStyles();
+  const { classes, theme, cx } = useStyles();
   const hasLinks = Array.isArray(links);
   const [opened, setOpened] = useState(initiallyOpened || false);
+  const [active, setActive] = useState(0);
   const ChevronIcon = theme.dir === "ltr" ? IconChevronRight : IconChevronLeft;
-  const items = (hasLinks ? links : []).map((link) => (
+  const items = (hasLinks ? links : []).map((link, index) => (
+    <NavLink
+      key={link.label}
+      active={index === active}
+      label={link.label}
+      // description={item.description}
+      // rightSection={item.rightSection}
+      // icon={<item.icon size="1rem" stroke={1.5} />}
+      onClick={() => setActive(index)}
+      // variant="subtle"
+      // className={classes.link}
+      className={cx(classes.link, {
+        [classes.linkActive]: active === index,
+      })}
+    />
+    /*
     <Text<"a">
       component="a"
       className={classes.link}
@@ -92,6 +121,7 @@ export function LinksGroup({
     >
       {link.label}
     </Text>
+*/
   ));
 
   return (
@@ -126,6 +156,7 @@ export function LinksGroup({
   );
 }
 
+/*
 const mockdata = {
   label: "Releases",
   icon: IconCalendarStats,
@@ -143,3 +174,4 @@ export function NavbarLinksGroup() {
     </>
   );
 }
+*/

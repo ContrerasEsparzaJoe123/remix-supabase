@@ -70,7 +70,7 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-export default function NavbarNested() {
+export default function NavbarNested(props: { opened: boolean }) {
   const { classes } = useStyles();
   const links = mockdata.map((item, index) => (
     <>
@@ -85,7 +85,13 @@ export default function NavbarNested() {
   ));
 
   return (
-    <Navbar height={800} width={{ sm: 300 }} p="md" className={classes.navbar}>
+    <Navbar
+      p="md"
+      hiddenBreakpoint="sm"
+      hidden={!props.opened}
+      width={{ sm: 200, lg: 300 }}
+      className={classes.navbar}
+    >
       {/*
       <Navbar.Section className={classes.header}>
         <Group position="apart">
