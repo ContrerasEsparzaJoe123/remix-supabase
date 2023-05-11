@@ -4,17 +4,14 @@ import {
   Box,
   Collapse,
   ThemeIcon,
-  Text,
   UnstyledButton,
   createStyles,
   rem,
   NavLink,
+  em,
+  getBreakpointValue,
 } from "@mantine/core";
-import {
-  IconCalendarStats,
-  IconChevronLeft,
-  IconChevronRight,
-} from "@tabler/icons-react";
+import { IconChevronLeft, IconChevronRight } from "@tabler/icons-react";
 
 const useStyles = createStyles((theme) => ({
   control: {
@@ -42,6 +39,15 @@ const useStyles = createStyles((theme) => ({
     paddingLeft: rem(31),
     marginLeft: rem(30),
     fontSize: theme.fontSizes.sm,
+    // Media query with value from theme
+    [`@media (min-width: ${em(getBreakpointValue(theme.breakpoints.lg) - 1)})`]:
+      {
+        width: "17rem",
+      },
+    [`@media (max-width: ${em(getBreakpointValue(theme.breakpoints.md) - 1)})`]:
+      {
+        width: "10rem",
+      },
     color:
       theme.colorScheme === "dark"
         ? theme.colors.dark[0]
@@ -60,7 +66,7 @@ const useStyles = createStyles((theme) => ({
   },
 
   linkActive: {
-    fontWeight: 500,
+    // fontWeight: 500,
     borderLeftColor:
       theme.colors[theme.primaryColor][theme.colorScheme === "dark" ? 6 : 7],
     color:
@@ -107,6 +113,7 @@ export function LinksGroup({
       onClick={() => setActive(index)}
       // variant="subtle"
       // className={classes.link}
+      // sx={{ width: "17rem" }}
       className={cx(classes.link, {
         [classes.linkActive]: active === index,
       })}
@@ -151,7 +158,9 @@ export function LinksGroup({
           )}
         </Group>
       </UnstyledButton>
-      {hasLinks ? <Collapse in={opened}>{items}</Collapse> : null}
+      <Group spacing={0}>
+        {hasLinks ? <Collapse in={opened}>{items}</Collapse> : null}
+      </Group>
     </>
   );
 }

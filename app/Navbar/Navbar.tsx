@@ -5,6 +5,8 @@ import {
   ScrollArea,
   createStyles,
   rem,
+  Title,
+  Flex,
 } from "@mantine/core";
 import {
   IconCalendarStats,
@@ -22,6 +24,7 @@ const mockdata = [
     initiallyOpened: true,
     links: [
       { label: "Profile", link: "/" },
+
       { label: "Notifications", link: "/" },
       { label: "Credentials", link: "/" },
     ],
@@ -32,6 +35,7 @@ const mockdata = [
     initiallyOpened: true,
     links: [
       { label: "Attributes", link: "/" },
+
       { label: "Group Mentions", link: "/" },
       { label: "Task Forms", link: "/" },
       { label: "Integrations", link: "/" },
@@ -43,6 +47,7 @@ const mockdata = [
     initiallyOpened: true,
     links: [
       { label: "Billing", link: "/" },
+
       { label: "Users", link: "/" },
       { label: "Company", link: "/" },
       { label: "Permissions", link: "/" },
@@ -64,9 +69,35 @@ const useStyles = createStyles((theme) => ({
     marginRight: `calc(${theme.spacing.md} * -1)`,
   },
 
+  title: {
+    boxSizing: "border-box",
+    fontFamily: `Greycliff CF, ${theme.fontFamily}`,
+    marginBottom: theme.spacing.xl,
+    backgroundColor:
+      theme.colorScheme === "dark" ? theme.colors.dark[7] : theme.white,
+    padding: theme.spacing.md,
+    paddingTop: rem(18),
+    height: rem(60),
+    borderBottom: `${rem(1)} solid ${
+      theme.colorScheme === "dark" ? theme.colors.dark[7] : theme.colors.gray[3]
+    }`,
+  },
+
   linksInner: {
-    paddingTop: theme.spacing.xl,
+    paddingTop: theme.spacing.lg,
     paddingBottom: theme.spacing.xl,
+    // flex: "min-content",
+    // flex: `0 0 ${rem(60)}`,
+    /*
+    backgroundColor:
+      theme.colorScheme === "dark" ? theme.colors.dark[7] : theme.white,
+*/
+    // display: "flex",
+    // flexDirection: "column",
+    // alignItems: "center",
+    borderRight: `${rem(1)} solid ${
+      theme.colorScheme === "dark" ? theme.colors.dark[7] : theme.colors.gray[3]
+    }`,
   },
 }));
 
@@ -89,20 +120,20 @@ export default function NavbarNested(props: { opened: boolean }) {
       p="md"
       hiddenBreakpoint="sm"
       hidden={!props.opened}
-      width={{ sm: 200, lg: 300 }}
+      width={{ sm: 200, lg: 700 }}
       className={classes.navbar}
     >
-      {/*
-      <Navbar.Section className={classes.header}>
-        <Group position="apart">
-          <Logo width={rem(120)} />
-          <Code sx={{ fontWeight: 700 }}>v3.1.2</Code>
-        </Group>
-      </Navbar.Section>
-*/}
-
       <Navbar.Section grow className={classes.links} component={ScrollArea}>
-        <div className={classes.linksInner}>{links}</div>
+        {/*
+        <Group grow>
+          <div className={classes.linksInner}>{links}</div>
+          <div>content</div>
+        </Group>
+*/}
+        <Flex direction="row" justify="flex-start" align="flex-start">
+          <div className={classes.linksInner}>{links}</div>
+          <div>content</div>
+        </Flex>
       </Navbar.Section>
     </Navbar>
   );
