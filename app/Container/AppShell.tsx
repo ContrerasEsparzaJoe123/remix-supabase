@@ -10,6 +10,7 @@ import {
   Burger,
   useMantineTheme,
 } from "@mantine/core";
+import NavbarNested from "~/Navbar/Navbar";
 
 export default function AppShellDemo() {
   const theme = useMantineTheme();
@@ -29,18 +30,9 @@ export default function AppShellDemo() {
       }}
       navbarOffsetBreakpoint="sm"
       asideOffsetBreakpoint="sm"
-      navbar={
-        <Navbar
-          p="md"
-          hiddenBreakpoint="sm"
-          hidden={!opened}
-          width={{ sm: 200, lg: 300 }}
-        >
-          <Text>Application navbar</Text>
-        </Navbar>
-      }
+      navbar={<NavbarNested />}
       header={
-        <Header height={{ base: 50, md: 70 }} p="md">
+        <Header height={{ base: 50, md: 70 }} bg={theme.colors.gray[0]} p="md">
           <div
             style={{ display: "flex", alignItems: "center", height: "100%" }}
           >

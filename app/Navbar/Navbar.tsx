@@ -7,48 +7,45 @@ import {
   rem,
 } from "@mantine/core";
 import {
-  IconNotes,
   IconCalendarStats,
-  IconGauge,
-  IconPresentationAnalytics,
-  IconFileAnalytics,
-  IconAdjustments,
   IconLock,
-} from "@tabler/icons";
+  IconAddressBook,
+  IconBuildingSkyscraper,
+  IconBox,
+} from "@tabler/icons-react";
 import { LinksGroup } from "~/NavbarLinksGroup/NavbarLinksGroup";
 
 const mockdata = [
-  { label: "Dashboard", icon: IconGauge },
   {
-    label: "Market news",
-    icon: IconNotes,
+    label: "Personal Settings",
+    icon: IconAddressBook,
     initiallyOpened: true,
     links: [
-      { label: "Overview", link: "/" },
-      { label: "Forecasts", link: "/" },
-      { label: "Outlook", link: "/" },
-      { label: "Real time", link: "/" },
+      { label: "Profile", link: "/" },
+      { label: "Notifications", link: "/" },
+      { label: "Credentials", link: "/" },
     ],
   },
   {
-    label: "Releases",
-    icon: IconCalendarStats,
+    label: "Product Settings",
+    icon: IconBox,
+    initiallyOpened: true,
     links: [
-      { label: "Upcoming releases", link: "/" },
-      { label: "Previous releases", link: "/" },
-      { label: "Releases schedule", link: "/" },
+      { label: "Attributes", link: "/" },
+      { label: "Group Mentions", link: "/" },
+      { label: "Task Forms", link: "/" },
+      { label: "Integrations", link: "/" },
     ],
   },
-  { label: "Analytics", icon: IconPresentationAnalytics },
-  { label: "Contracts", icon: IconFileAnalytics },
-  { label: "Settings", icon: IconAdjustments },
   {
-    label: "Security",
-    icon: IconLock,
+    label: "Workplace Settings",
+    icon: IconBuildingSkyscraper,
+    initiallyOpened: true,
     links: [
-      { label: "Enable 2FA", link: "/" },
-      { label: "Change password", link: "/" },
-      { label: "Recovery codes", link: "/" },
+      { label: "Billing", link: "/" },
+      { label: "Users", link: "/" },
+      { label: "Company", link: "/" },
+      { label: "Permissions", link: "/" },
     ],
   },
 ];
@@ -56,7 +53,9 @@ const mockdata = [
 const useStyles = createStyles((theme) => ({
   navbar: {
     backgroundColor:
-      theme.colorScheme === "dark" ? theme.colors.dark[6] : theme.white,
+      theme.colorScheme === "dark"
+        ? theme.colors.dark[6]
+        : theme.colors.gray[0],
     paddingBottom: 0,
   },
 
@@ -71,10 +70,18 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-export function NavbarNested() {
+export default function NavbarNested() {
   const { classes } = useStyles();
   const links = mockdata.map((item, index) => (
-    <LinksGroup {...item} key={item.label} />
+    <>
+      <LinksGroup
+        links={item.links}
+        icon={item.icon}
+        label={item.label}
+        initiallyOpened={item.initiallyOpened}
+        key={item.label}
+      />
+    </>
   ));
 
   return (
