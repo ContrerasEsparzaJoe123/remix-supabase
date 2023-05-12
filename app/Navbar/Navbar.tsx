@@ -7,6 +7,7 @@ import {
   Title,
   Group,
   Box,
+  ActionIcon,
 } from "@mantine/core";
 import {
   IconArrowNarrowLeft,
@@ -17,6 +18,7 @@ import {
 } from "@tabler/icons-react";
 import { LinksGroup } from "~/NavbarLinksGroup/NavbarLinksGroup";
 import { DndList } from "~/DndList/DndList";
+import { useState } from "react";
 
 const mockdata = [
   {
@@ -24,10 +26,9 @@ const mockdata = [
     icon: IconAddressBook,
     initiallyOpened: true,
     links: [
-      { label: "Profile", link: "/" },
-
-      { label: "Notifications", link: "/" },
-      { label: "Credentials", link: "/" },
+      { label: "Profile", link: "/", key: 0 },
+      { label: "Notifications", link: "/", key: 1 },
+      { label: "Credentials", link: "/", key: 2 },
     ],
   },
   {
@@ -35,11 +36,11 @@ const mockdata = [
     icon: IconBox,
     initiallyOpened: true,
     links: [
-      { label: "Attributes", link: "/" },
+      { label: "Attributes", link: "/", key: 3 },
 
-      { label: "Group Mentions", link: "/" },
-      { label: "Task Forms", link: "/" },
-      { label: "Integrations", link: "/" },
+      { label: "Group Mentions", link: "/", key: 4 },
+      { label: "Task Forms", link: "/", key: 5 },
+      { label: "Integrations", link: "/", key: 6 },
     ],
   },
   {
@@ -47,11 +48,11 @@ const mockdata = [
     icon: IconBuildingSkyscraper,
     initiallyOpened: true,
     links: [
-      { label: "Billing", link: "/" },
+      { label: "Billing", link: "/", key: 7 },
 
-      { label: "Users", link: "/" },
-      { label: "Company", link: "/" },
-      { label: "Permissions", link: "/" },
+      { label: "Users", link: "/", key: 8 },
+      { label: "Company", link: "/", key: 9 },
+      { label: "Permissions", link: "/", key: 10 },
     ],
   },
 ];
@@ -113,6 +114,7 @@ const useStyles = createStyles((theme) => ({
 
 export default function NavbarNested(props: { opened: boolean }) {
   const { classes, theme } = useStyles();
+  const [asideOpened, setAsideOpened] = useState(false);
   const links = mockdata.map((item, index) => (
     <LinksGroup
       links={item.links}
@@ -120,6 +122,7 @@ export default function NavbarNested(props: { opened: boolean }) {
       label={item.label}
       initiallyOpened={item.initiallyOpened}
       key={`${item.label}${index}`}
+      setAsideOpened={setAsideOpened}
     />
   ));
 
@@ -128,7 +131,7 @@ export default function NavbarNested(props: { opened: boolean }) {
       px="md"
       hiddenBreakpoint="sm"
       hidden={!props.opened}
-      width={{ sm: 200, lg: 700 }}
+      width={{ sm: 200, lg: asideOpened ? "fit-content" : 700 }}
       className={classes.navbar}
     >
       <Navbar.Section grow className={classes.links} component={ScrollArea}>
@@ -145,7 +148,7 @@ export default function NavbarNested(props: { opened: boolean }) {
             </Box>
             {links}
           </div>
-          <Box w={{ base: 320, sm: 480, lg: "100%" }}>
+          <Box w={{ base: 320, sm: 480, lg: "100%" }} hidden={asideOpened}>
             <Group
               className={classes.section}
               position="apart"
@@ -161,7 +164,16 @@ export default function NavbarNested(props: { opened: boolean }) {
               >
                 Fields
               </Title>
-              <IconLayoutSidebarLeftCollapse />
+              <ActionIcon
+                color="dark"
+                size="lg"
+                radius="xl"
+                variant="transparent"
+                onClick={() => setAsideOpened((o) => !o)}
+              >
+                {/*<IconAdjustments size="1.625rem" />*/}
+                <IconLayoutSidebarLeftCollapse />
+              </ActionIcon>
             </Group>
             <Box mx="lg">
               <DndList />

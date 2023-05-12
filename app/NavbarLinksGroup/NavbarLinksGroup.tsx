@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import {
   Group,
   Box,
@@ -88,7 +88,8 @@ interface LinksGroupProps {
   icon: React.FC<any>;
   label: string;
   initiallyOpened?: boolean;
-  links?: { label: string; link: string }[];
+  links?: { label: string; link: string; key: number }[];
+  setAsideOpened: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export function LinksGroup({
@@ -96,6 +97,7 @@ export function LinksGroup({
   label,
   initiallyOpened,
   links,
+  setAsideOpened,
 }: LinksGroupProps) {
   const { classes, theme, cx } = useStyles();
   const hasLinks = Array.isArray(links);
@@ -105,17 +107,22 @@ export function LinksGroup({
   const items = (hasLinks ? links : []).map((link, index) => (
     <NavLink
       key={link.label}
-      active={index === active}
+      active={link.key === active}
       label={link.label}
       // description={item.description}
       // rightSection={item.rightSection}
       // icon={<item.icon size="1rem" stroke={1.5} />}
-      onClick={() => setActive(index)}
+      onClick={() => {
+        if (link.label === "Task Forms") {
+          setAsideOpened(false);
+        }
+        setActive(link.key);
+      }}
       // variant="subtle"
       // className={classes.link}
       // sx={{ width: "17rem" }}
       className={cx(classes.link, {
-        [classes.linkActive]: active === index,
+        [classes.linkActive]: active === link.key,
       })}
     />
     /*
