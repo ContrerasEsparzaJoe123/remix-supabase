@@ -13,8 +13,10 @@ import {
   IconAddressBook,
   IconBuildingSkyscraper,
   IconBox,
+  IconLayoutSidebarLeftCollapse,
 } from "@tabler/icons-react";
 import { LinksGroup } from "~/NavbarLinksGroup/NavbarLinksGroup";
+import { DndList } from "~/DndList/DndList";
 
 const mockdata = [
   {
@@ -83,7 +85,9 @@ const useStyles = createStyles((theme) => ({
   },
 
   section: {
-    height: rem(60),
+    maxHeight: rem(80),
+    paddingBottom: theme.spacing.xl,
+    paddingTop: theme.spacing.xl,
     borderBottom: `${rem(1)} solid ${
       theme.colorScheme === "dark" ? theme.colors.dark[4] : theme.colors.gray[3]
     }`,
@@ -108,22 +112,20 @@ const useStyles = createStyles((theme) => ({
 }));
 
 export default function NavbarNested(props: { opened: boolean }) {
-  const { classes } = useStyles();
+  const { classes, theme } = useStyles();
   const links = mockdata.map((item, index) => (
-    <>
-      <LinksGroup
-        links={item.links}
-        icon={item.icon}
-        label={item.label}
-        initiallyOpened={item.initiallyOpened}
-        key={`${item.label}${index}`}
-      />
-    </>
+    <LinksGroup
+      links={item.links}
+      icon={item.icon}
+      label={item.label}
+      initiallyOpened={item.initiallyOpened}
+      key={`${item.label}${index}`}
+    />
   ));
 
   return (
     <Navbar
-      p="md"
+      px="md"
       hiddenBreakpoint="sm"
       hidden={!props.opened}
       width={{ sm: 200, lg: 700 }}
@@ -138,17 +140,32 @@ export default function NavbarNested(props: { opened: boolean }) {
 */}
         <Flex direction="row" justify="flex-start" align="flex-start">
           <div className={classes.linksInner}>
-            <div className={classes.section}>
+            <Box className={classes.section} ml="lg" mb="lg">
               <IconArrowNarrowLeft />
-            </div>
+            </Box>
             {links}
           </div>
           <Box w={{ base: 320, sm: 480, lg: "100%" }}>
-            <Group className={classes.section} position="apart">
-              <Title>Fields</Title>
-              <IconArrowNarrowLeft />
+            <Group
+              className={classes.section}
+              position="apart"
+              align="center"
+              px="lg"
+              mb="lg"
+            >
+              <Title
+                order={6}
+                weight={400}
+                size="h2"
+                color={theme.colors.blue[7]}
+              >
+                Fields
+              </Title>
+              <IconLayoutSidebarLeftCollapse />
             </Group>
-            content
+            <Box mx="lg">
+              <DndList />
+            </Box>
           </Box>
         </Flex>
       </Navbar.Section>

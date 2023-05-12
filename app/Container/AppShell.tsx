@@ -11,6 +11,7 @@ import {
   useMantineTheme,
 } from "@mantine/core";
 import NavbarNested from "~/Navbar/Navbar";
+import { DndList } from "~/DndList/DndList";
 
 export default function AppShellDemo() {
   const theme = useMantineTheme();
