@@ -23,14 +23,13 @@ export default function AppShellDemo() {
       styles={{
         main: {
           background:
-            theme.colorScheme === "dark"
-              ? theme.colors.dark[8]
-              : theme.colors.gray[0],
+            theme.colorScheme === "dark" ? theme.colors.dark[8] : theme.white,
         },
       }}
       navbarOffsetBreakpoint="sm"
       asideOffsetBreakpoint="sm"
       navbar={<NavbarNested opened={opened} />}
+      /*
       header={
         <Header height={{ base: 50, md: 70 }} bg={theme.colors.gray[0]} p="md">
           <div
@@ -50,6 +49,7 @@ export default function AppShellDemo() {
           </div>
         </Header>
       }
+*/
     >
       {burgerOpen && (
         <Burger

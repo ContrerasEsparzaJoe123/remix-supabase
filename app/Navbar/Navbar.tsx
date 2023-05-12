@@ -1,16 +1,15 @@
 import {
   Navbar,
-  Group,
-  Code,
   ScrollArea,
   createStyles,
   rem,
-  Title,
   Flex,
+  Title,
+  Group,
+  Box,
 } from "@mantine/core";
 import {
-  IconCalendarStats,
-  IconLock,
+  IconArrowNarrowLeft,
   IconAddressBook,
   IconBuildingSkyscraper,
   IconBox,
@@ -83,9 +82,16 @@ const useStyles = createStyles((theme) => ({
     }`,
   },
 
+  section: {
+    height: rem(60),
+    borderBottom: `${rem(1)} solid ${
+      theme.colorScheme === "dark" ? theme.colors.dark[4] : theme.colors.gray[3]
+    }`,
+  },
+
   linksInner: {
-    paddingTop: theme.spacing.lg,
-    paddingBottom: theme.spacing.xl,
+    // paddingTop: theme.spacing.lg,
+    // paddingBottom: theme.spacing.xl,
     // flex: "min-content",
     // flex: `0 0 ${rem(60)}`,
     /*
@@ -110,7 +116,7 @@ export default function NavbarNested(props: { opened: boolean }) {
         icon={item.icon}
         label={item.label}
         initiallyOpened={item.initiallyOpened}
-        key={item.label}
+        key={`${item.label}${index}`}
       />
     </>
   ));
@@ -131,8 +137,19 @@ export default function NavbarNested(props: { opened: boolean }) {
         </Group>
 */}
         <Flex direction="row" justify="flex-start" align="flex-start">
-          <div className={classes.linksInner}>{links}</div>
-          <div>content</div>
+          <div className={classes.linksInner}>
+            <div className={classes.section}>
+              <IconArrowNarrowLeft />
+            </div>
+            {links}
+          </div>
+          <Box w={{ base: 320, sm: 480, lg: "100%" }}>
+            <Group className={classes.section} position="apart">
+              <Title>Fields</Title>
+              <IconArrowNarrowLeft />
+            </Group>
+            content
+          </Box>
         </Flex>
       </Navbar.Section>
     </Navbar>
