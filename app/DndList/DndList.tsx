@@ -92,7 +92,7 @@ export function DndList() {
   const [state, handlers] = useListState(MockData);
 
   const items = state.map((item, index) => (
-    <Draggable key={item.symbol} index={index} draggableId={item.symbol}>
+    <Draggable key={item.symbol} index={index} draggableId={item.name}>
       {(provided, snapshot) => (
         <div
           className={cx(classes.item, {
@@ -126,11 +126,6 @@ export function DndList() {
   ));
 
   return (
-    <DragDropContext
-      onDragEnd={({ destination, source }) =>
-        handlers.reorder({ from: source.index, to: destination?.index || 0 })
-      }
-    >
       <Droppable droppableId="dnd-list" direction="vertical">
         {(provided) => (
           <div {...provided.droppableProps} ref={provided.innerRef}>
@@ -139,6 +134,5 @@ export function DndList() {
           </div>
         )}
       </Droppable>
-    </DragDropContext>
   );
 }
