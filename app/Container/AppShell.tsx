@@ -1,17 +1,16 @@
 import { useState } from "react";
 import {
   AppShell,
-  Navbar,
-  Header,
-  Footer,
-  Aside,
-  Text,
   MediaQuery,
   Burger,
   useMantineTheme,
+  Center,
+  Flex,
+  Box,
+  Container,
 } from "@mantine/core";
 import NavbarNested from "~/Navbar/Navbar";
-import { DndList } from "~/DndList/DndList";
+import { MainCard } from "~/Card/Card";
 
 export default function AppShellDemo() {
   const theme = useMantineTheme();
@@ -52,6 +51,7 @@ export default function AppShellDemo() {
       }
 */
     >
+      {/*
       {burgerOpen && (
         <Burger
           opened={!burgerOpen}
@@ -61,6 +61,19 @@ export default function AppShellDemo() {
           mr="xl"
         />
       )}
+*/}
+      <Flex
+        mih="80vh"
+        mx="auto"
+        gap="md"
+        w={{ xs: "100%", sm: "100%", lg: "100%" }}
+        justify="center"
+        align="center"
+        // direction="row"
+        // wrap="wrap"
+      >
+        <MainCard />
+      </Flex>
     </AppShell>
   );
 }

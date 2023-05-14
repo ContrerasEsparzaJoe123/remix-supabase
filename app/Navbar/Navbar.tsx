@@ -71,20 +71,6 @@ const useStyles = createStyles((theme) => ({
     marginRight: `calc(${theme.spacing.md} * -1)`,
   },
 
-  title: {
-    boxSizing: "border-box",
-    fontFamily: `Greycliff CF, ${theme.fontFamily}`,
-    marginBottom: theme.spacing.xl,
-    backgroundColor:
-      theme.colorScheme === "dark" ? theme.colors.dark[7] : theme.white,
-    padding: theme.spacing.md,
-    paddingTop: rem(18),
-    height: rem(60),
-    borderBottom: `${rem(1)} solid ${
-      theme.colorScheme === "dark" ? theme.colors.dark[7] : theme.colors.gray[3]
-    }`,
-  },
-
   section: {
     maxHeight: rem(80),
     paddingBottom: theme.spacing.xl,
