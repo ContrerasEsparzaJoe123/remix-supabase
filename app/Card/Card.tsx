@@ -1,7 +1,6 @@
 import {
   Card,
   Group,
-  Flex,
   ActionIcon,
   createStyles,
   Input,
@@ -26,23 +25,35 @@ import {
 import { useState } from "react";
 import type { answerType } from "~/AnswerContent/AnswerContent";
 import { AnswerContent } from "~/AnswerContent/AnswerContent";
+import type { QuestionInterface } from "~/Container/AppShell";
 
 const useStyles = createStyles((theme) => ({}));
-export function MainCard(props: { questionData: any, handlers: any, listState: any, setQuestions: any, questions: any }) {
-  const { classes, theme } = useStyles();
-   const { questionData } = props;
-  const [value, setValue] = useState<answerType>(questionData.type || 'Radio');
+export function MainCard(props: {
+  questionData: QuestionInterface;
+  handlers: any;
+  listState: QuestionInterface[];
+  setQuestions: React.Dispatch<React.SetStateAction<QuestionInterface[]>>;
+  questions: QuestionInterface[];
+}) {
+  const { theme } = useStyles();
+  const { questionData } = props;
+  const [value, setValue] = useState<answerType | string>(
+    questionData.type || "Radio"
+  );
 
   const showFilter = () => {
-    props.setQuestions(props.handlers.filter(element => element.id !== questionData.id));
-  }
+    props.setQuestions(
+      props.handlers.filter(
+        (element: QuestionInterface) => element.id !== questionData.id
+      )
+    );
+  };
   return (
     <Card
       shadow="sm"
       padding="lg"
       radius="md"
       withBorder
-      // bg="#F9FAFB"
       mih="16rem"
       w={{ base: "100%", sm: "100%", md: "100%", lg: "100%" }}
     >
@@ -61,7 +72,12 @@ export function MainCard(props: { questionData: any, handlers: any, listState: a
               </Tabs.Tab>
             </Tabs.List>
           </Tabs>
-          <ActionIcon size="xl" radius="xl" variant="transparent" onClick={showFilter}>
+          <ActionIcon
+            size="xl"
+            radius="xl"
+            variant="transparent"
+            onClick={showFilter}
+          >
             <IconTrashX size="1.625rem" />
           </ActionIcon>
         </Group>
@@ -143,7 +159,13 @@ export function MainCard(props: { questionData: any, handlers: any, listState: a
         </Grid>
       </Card.Section>
       <Card.Section>
-         <AnswerContent type={value} options={questionData.options} questionData={questionData} questions={props.questions} setQuestions={props.setQuestions}/>
+        <AnswerContent
+          type={value}
+          options={questionData.options}
+          questionData={questionData}
+          questions={props.questions}
+          setQuestions={props.setQuestions}
+        />
       </Card.Section>
     </Card>
   );

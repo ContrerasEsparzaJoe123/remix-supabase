@@ -8,7 +8,7 @@ import {
   Group,
   Box,
   ActionIcon,
-  em
+  em,
 } from "@mantine/core";
 import {
   IconArrowNarrowLeft,
@@ -83,28 +83,18 @@ const useStyles = createStyles((theme) => ({
     borderRight: `${rem(1)} solid ${
       theme.colorScheme === "dark" ? theme.colors.dark[7] : theme.colors.gray[3]
     }`,
-     [`@media (max-width: ${em(800)})`]: {
+    [`@media (max-width: ${em(800)})`]: {
       // backgroundColor: theme.colors.orange[6],
-      width: '200px',
+      width: "200px",
     },
   },
-   tools: {
+  tools: {
     // background: 'green',
     [`@media (max-width: ${em(800)})`]: {
-      width: '300px',
+      width: "300px",
     },
-  }
+  },
 }));
-interface OptionInterface {
-  option: string,
-  isCorrectAnswer: boolean
-};
-
-interface QuestionInterface {
-  question: string,
-  type: string,
-  options: Array<OptionInterface>
-};
 
 export default function NavbarNested(props: { opened: boolean }) {
   const { classes, theme } = useStyles();
@@ -125,9 +115,13 @@ export default function NavbarNested(props: { opened: boolean }) {
       px="md"
       hiddenBreakpoint="sm"
       hidden={!props.opened}
-      width={{ sm: asideOpened ? 400 : 200, md: asideOpened ? 490 : 282 , lg: asideOpened ? 490 : 282 }}
+      width={{
+        sm: asideOpened ? 400 : 200,
+        md: asideOpened ? 490 : 282,
+        lg: asideOpened ? 490 : 282,
+      }}
       className={classes.navbar}
-            sx={{ transition: "0.3s ease" }}
+      sx={{ transition: "0.3s ease" }}
     >
       <Navbar.Section grow className={classes.links} component={ScrollArea}>
         {/*
@@ -138,40 +132,44 @@ export default function NavbarNested(props: { opened: boolean }) {
 */}
         <Flex direction="row" justify="flex-start" align="flex-start">
           <div className={classes.linksInner}>
-             <Box className={classes.section} ml="lg" mb="lg" py='sm'>
+            <Box className={classes.section} ml="lg" mb="lg" py="sm">
               <IconArrowNarrowLeft />
             </Box>
             {links}
           </div>
-          <Box w={{ base: 320, sm: 480, lg: asideOpened ? "100%" : 0 }} className={classes.tools} sx={{ overflow: "hidden", transition: '0.3s ease'}} >
+          <Box
+            w={{ base: 320, sm: 480, lg: asideOpened ? "100%" : 0 }}
+            className={classes.tools}
+            sx={{ overflow: "hidden", transition: "0.3s ease" }}
+          >
             <Box>
-            <Group
-              className={classes.section}
-              position="apart"
-              align="center"
-              px="lg"
-              mb="lg"
-              py='xs'
-            >
-              <Title
-                order={6}
-                weight={400}
-                   size="sm"
-                color={theme.colors.blue[7]}
+              <Group
+                className={classes.section}
+                position="apart"
+                align="center"
+                px="lg"
+                mb="lg"
+                py="xs"
               >
-                Fields
-              </Title>
-              <ActionIcon
-                color="dark"
-                size="lg"
-                radius="xl"
-                variant="transparent"
+                <Title
+                  order={6}
+                  weight={400}
+                  size="sm"
+                  color={theme.colors.blue[7]}
+                >
+                  Fields
+                </Title>
+                <ActionIcon
+                  color="dark"
+                  size="lg"
+                  radius="xl"
+                  variant="transparent"
                   onClick={() => setAsideOpened(!asideOpened)}
-              >
-                {/*<IconAdjustments size="1.625rem" />*/}
-                <IconLayoutSidebarLeftCollapse />
-              </ActionIcon>
-            </Group>
+                >
+                  {/*<IconAdjustments size="1.625rem" />*/}
+                  <IconLayoutSidebarLeftCollapse />
+                </ActionIcon>
+              </Group>
             </Box>
             <Box mx="lg">
               <DndList />

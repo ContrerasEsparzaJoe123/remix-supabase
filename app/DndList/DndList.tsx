@@ -7,15 +7,14 @@ import {
   IconMenu,
   IconMenu2,
 } from "@tabler/icons-react";
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import { theme } from "~/theme";
+import { Droppable, Draggable } from "react-beautiful-dnd";
 
 const useStyles = createStyles((theme) => ({
   item: {
     ...theme.fn.focusStyles(),
     display: "flex",
     alignItems: "center",
-        gap: '10px',
+    gap: "10px",
     borderRadius: theme.radius.md,
     border: `${rem(1)} solid ${
       theme.colorScheme === "dark" ? theme.colors.dark[5] : theme.colors.gray[2]
@@ -37,53 +36,43 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-interface DndListProps {
-  data: {
-    position: number;
-    mass: number;
-    symbol: string;
-    name: string;
-  }[];
-}
-
 export function DndList() {
   const { classes, cx, theme } = useStyles();
   const MockData = [
     {
-     
       name: "Radio",
       color: theme.colors.teal[0],
       icon: <IconCircleDot color="black" size={24} />,
     },
     {
-   
       name: "Checkboxes",
       color: theme.colors.indigo[0],
       icon: <IconCheckbox color="black" size={24} />,
     },
     {
-     
       name: "Short Answer",
       color: theme.colors.yellow[0],
       icon: <IconMenu color="black" size={24} />,
     },
     {
-    
       name: "Long Answer",
       color: theme.colors.red[0],
       icon: <IconMenu2 color="black" size={24} />,
     },
     {
-     
       name: "Email",
       color: theme.colors.teal[0],
       icon: <IconMail color="black" size={24} />,
     },
   ];
-  const [state, handlers] = useListState(MockData);
+  const [state] = useListState(MockData);
 
   const items = state.map((item, index) => (
-       <Draggable key={`${item.name}-${index}`}  index={index} draggableId={item.name} >
+    <Draggable
+      key={`${item.name}-${index}`}
+      index={index}
+      draggableId={item.name}
+    >
       {(provided, snapshot) => (
         <div
           className={cx(classes.item, {
@@ -93,21 +82,11 @@ export function DndList() {
           {...provided.dragHandleProps}
           ref={provided.innerRef}
         >
-          <ThemeIcon
-            radius="xl"
-            variant="filled"
-            size="sm"
-            color={item.color}
-          >
+          <ThemeIcon radius="xl" variant="filled" size="sm" color={item.color}>
             {item.icon}
           </ThemeIcon>
           <div>
             <Text size="sm">{item.name}</Text>
-            {/*
-            <Text color="dimmed" size="sm">
-              Position: {item.position} • Mass: {item.mass}
-            </Text>
-*/}
           </div>
         </div>
       )}
@@ -115,13 +94,13 @@ export function DndList() {
   ));
 
   return (
-      <Droppable droppableId="dnd-list" direction="vertical">
-        {(provided) => (
-          <div {...provided.droppableProps} ref={provided.innerRef}>
-            {items}
-            {provided.placeholder}
-          </div>
-        )}
-      </Droppable>
+    <Droppable droppableId="dnd-list" direction="vertical">
+      {(provided) => (
+        <div {...provided.droppableProps} ref={provided.innerRef}>
+          {items}
+          {provided.placeholder}
+        </div>
+      )}
+    </Droppable>
   );
 }

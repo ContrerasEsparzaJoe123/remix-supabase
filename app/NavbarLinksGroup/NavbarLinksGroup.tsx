@@ -9,7 +9,6 @@ import {
   rem,
   NavLink,
   em,
-  getBreakpointValue,
 } from "@mantine/core";
 import { IconChevronLeft, IconChevronRight } from "@tabler/icons-react";
 
@@ -33,15 +32,11 @@ const useStyles = createStyles((theme) => ({
 
   link: {
     fontWeight: 500,
-    width: '100%',
+    width: "100%",
     display: "block",
     textDecoration: "none",
     padding: `${theme.spacing.xs} ${theme.spacing.md}`,
-    // paddingLeft: rem(31),
-    // marginLeft: rem(30),
     fontSize: theme.fontSizes.sm,
-    // Media query with value from theme
-    
     color:
       theme.colorScheme === "dark"
         ? theme.colors.dark[0]
@@ -79,11 +74,11 @@ const useStyles = createStyles((theme) => ({
 
   links: {
     width: "280px",
-    
+
     [`@media (max-width: ${em(800)})`]: {
-      width: '200px',
+      width: "200px",
     },
-  }
+  },
 }));
 
 interface LinksGroupProps {
@@ -111,6 +106,7 @@ export function LinksGroup({
       key={link.label}
       active={link.key === active}
       label={link.label}
+      description="asdfa"
       // description={item.description}
       // rightSection={item.rightSection}
       // icon={<item.icon size="1rem" stroke={1.5} />}
@@ -120,14 +116,17 @@ export function LinksGroup({
       //   }
       //   setActive(link.key);
       // }}
-      onClick={() => setAsideOpened(true)}
+      onClick={() => {
+        setAsideOpened(true);
+        setActive(link.key);
+      }}
       // variant="subtle"
       // className={classes.link}
       // sx={{ width: "17rem" }}
       className={cx(classes.link, {
         [classes.linkActive]: active === link.key,
       })}
-    />
+    ></NavLink>
     /*
     <Text<"a">
       component="a"
@@ -169,7 +168,11 @@ export function LinksGroup({
         </Group>
       </UnstyledButton>
       <Group spacing={0}>
-        {hasLinks ? <Collapse pl='16px' className={classes.links} in={opened}>{items}</Collapse> : null}
+        {hasLinks ? (
+          <Collapse pl="16px" className={classes.links} in={opened}>
+            {items}
+          </Collapse>
+        ) : null}
       </Group>
     </>
   );
