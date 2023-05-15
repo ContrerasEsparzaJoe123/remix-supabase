@@ -8,10 +8,15 @@ import {
 import { IconMinus, IconPlus } from "@tabler/icons-react";
 
 interface MultiChoiceProps {
-  type: "Radio" | "Checkboxes" 
+  type: "Radio" | "Checkboxes" ,
+  setQuestions: any,
+  questions: any,
+  options: any,
+  questionData: any,
+  option: any
 }
 
-export function MultiChoiceContent({ type }: MultiChoiceProps) {
+export function MultiChoiceContent({ type, option, setQuestions, questions, options, questionData }: MultiChoiceProps) {
   let content;
   switch (type) {
     case "Radio":
@@ -20,24 +25,40 @@ export function MultiChoiceContent({ type }: MultiChoiceProps) {
     case "Checkboxes":
       content = <Checkbox />;
       break;
-/*     case "Short Answer":
-      content = <Textarea minRows={2} maxRows={4} radius="md" />;
-      break;
-    case "Long Answer":
-      content = <Textarea minRows={4} maxRows={6} radius="md" />;
-      break;
-    case "Email":
-      content = (
-        <TextInput
-          placeholder="Enter an answer choice"
-          size="md"
-          radius="md"
-          sx={{ input: { backgroundColor: "transparent" } }}
-          w="32rem"
-        />
-      );
-      break; */
+
   }
+
+
+  const addOption = () => {
+    const newOption = { id: Math.floor(Math.random() * 999), option: "Pluton", isCorrectAnswer: true }
+
+    const myQuestions = questions.map(question => {
+      if(question.id === questionData.id) {
+        question.options.push(newOption);
+        return question;
+      } else {
+        return question;
+      }
+    });
+
+    setQuestions(myQuestions);
+
+  }
+
+  const removeOption = () => {
+    const myQuestions = questions.map(question => {
+      if(question.id === questionData.id) {
+        const newQuestion = {...question, options: question.options.filter(element => element.id !== option.id)};
+        return newQuestion;
+      } else {
+        return question;
+      }
+    });
+
+    setQuestions(myQuestions);
+  }
+
+
     return (
       <Flex justify="flex-start" align="center" direction="row" gap="md">
         {content}
@@ -48,10 +69,10 @@ export function MultiChoiceContent({ type }: MultiChoiceProps) {
           sx={{ input: { backgroundColor: "transparent" } }}
           w="32rem"
         />
-        <ActionIcon color="dark" radius="md" variant="outline" ml="lg">
+        <ActionIcon color="dark" radius="md" variant="outline" ml="lg" onClick={removeOption}>
           <IconMinus size="1.125rem" />
         </ActionIcon>
-        <ActionIcon color="dark" radius="md" variant="outline">
+         <ActionIcon color="dark" radius="md" variant="outline" onClick={addOption}>
           <IconPlus size="1.125rem" />
         </ActionIcon>
       </Flex>

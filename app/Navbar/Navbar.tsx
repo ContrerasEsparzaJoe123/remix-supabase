@@ -8,6 +8,7 @@ import {
   Group,
   Box,
   ActionIcon,
+  em
 } from "@mantine/core";
 import {
   IconArrowNarrowLeft,
@@ -73,34 +74,41 @@ const useStyles = createStyles((theme) => ({
 
   section: {
     maxHeight: rem(80),
-    paddingBottom: theme.spacing.xl,
-    paddingTop: theme.spacing.xl,
     borderBottom: `${rem(1)} solid ${
       theme.colorScheme === "dark" ? theme.colors.dark[4] : theme.colors.gray[3]
     }`,
   },
 
   linksInner: {
-    // paddingTop: theme.spacing.lg,
-    // paddingBottom: theme.spacing.xl,
-    // flex: "min-content",
-    // flex: `0 0 ${rem(60)}`,
-    /*
-    backgroundColor:
-      theme.colorScheme === "dark" ? theme.colors.dark[7] : theme.white,
-*/
-    // display: "flex",
-    // flexDirection: "column",
-    // alignItems: "center",
     borderRight: `${rem(1)} solid ${
       theme.colorScheme === "dark" ? theme.colors.dark[7] : theme.colors.gray[3]
     }`,
+     [`@media (max-width: ${em(800)})`]: {
+      // backgroundColor: theme.colors.orange[6],
+      width: '200px',
+    },
   },
+   tools: {
+    // background: 'green',
+    [`@media (max-width: ${em(800)})`]: {
+      width: '300px',
+    },
+  }
 }));
+interface OptionInterface {
+  option: string,
+  isCorrectAnswer: boolean
+};
+
+interface QuestionInterface {
+  question: string,
+  type: string,
+  options: Array<OptionInterface>
+};
 
 export default function NavbarNested(props: { opened: boolean }) {
   const { classes, theme } = useStyles();
-  const [asideOpened, setAsideOpened] = useState(false);
+  const [asideOpened, setAsideOpened] = useState(true);
   const links = mockdata.map((item, index) => (
     <LinksGroup
       links={item.links}
@@ -117,8 +125,9 @@ export default function NavbarNested(props: { opened: boolean }) {
       px="md"
       hiddenBreakpoint="sm"
       hidden={!props.opened}
-      width={{ sm: 200, lg: asideOpened ? "fit-content" : 700 }}
+      width={{ sm: asideOpened ? 400 : 200, md: asideOpened ? 490 : 282 , lg: asideOpened ? 490 : 282 }}
       className={classes.navbar}
+            sx={{ transition: "0.3s ease" }}
     >
       <Navbar.Section grow className={classes.links} component={ScrollArea}>
         {/*
@@ -129,23 +138,25 @@ export default function NavbarNested(props: { opened: boolean }) {
 */}
         <Flex direction="row" justify="flex-start" align="flex-start">
           <div className={classes.linksInner}>
-            <Box className={classes.section} ml="lg" mb="lg">
+             <Box className={classes.section} ml="lg" mb="lg" py='sm'>
               <IconArrowNarrowLeft />
             </Box>
             {links}
           </div>
-          <Box w={{ base: 320, sm: 480, lg: "100%" }} hidden={asideOpened}>
+          <Box w={{ base: 320, sm: 480, lg: asideOpened ? "100%" : 0 }} className={classes.tools} sx={{ overflow: "hidden", transition: '0.3s ease'}} >
+            <Box>
             <Group
               className={classes.section}
               position="apart"
               align="center"
               px="lg"
               mb="lg"
+              py='xs'
             >
               <Title
                 order={6}
                 weight={400}
-                size="h2"
+                   size="sm"
                 color={theme.colors.blue[7]}
               >
                 Fields
@@ -155,12 +166,13 @@ export default function NavbarNested(props: { opened: boolean }) {
                 size="lg"
                 radius="xl"
                 variant="transparent"
-                onClick={() => setAsideOpened((o) => !o)}
+                  onClick={() => setAsideOpened(!asideOpened)}
               >
                 {/*<IconAdjustments size="1.625rem" />*/}
                 <IconLayoutSidebarLeftCollapse />
               </ActionIcon>
             </Group>
+            </Box>
             <Box mx="lg">
               <DndList />
             </Box>
