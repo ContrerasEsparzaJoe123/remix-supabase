@@ -42,7 +42,7 @@ export function MainCard(props: {
   const setQuestionsArr = useQuestionsStore(state => state.setQuestions)
   const questions = useQuestionsStore(state => state.questions)
   const setCurrentQuestion = useQuestionsStore(state => state.setCurrentQuestion)
-  const setType = useQuestionsStore(state => state.setType)
+  // const setType = useQuestionsStore(state => state.setType)
   const [value, setValue] = useState<answerType | string>(
     questionData.type || "Radio"
   );
@@ -113,6 +113,7 @@ export function MainCard(props: {
               rightSection={<IconChevronDown size="1rem" />}
               radius="md"
               size="md"
+              maxDropdownHeight={100}
               rightSectionWidth={30}
               styles={{ rightSection: { pointerEvents: "none" } }}
               icon={
@@ -152,10 +153,7 @@ export function MainCard(props: {
                 ) : null
               }
               value={value}
-              onChange={(value: answerType) => {
-                setValue(value)
-                setType(value)
-              }}
+              onChange={(value: answerType) => setValue(value) }
               data={[
                 "Radio",
                 "Checkboxes",
@@ -169,7 +167,7 @@ export function MainCard(props: {
       </Card.Section>
       <Card.Section>
         <AnswerContent
-          // type={value}
+          type={value}
           // options={questionData.options}
           // questionData={questionData}
           // questions={props.questions}

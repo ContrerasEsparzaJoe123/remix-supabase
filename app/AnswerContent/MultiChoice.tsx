@@ -5,7 +5,7 @@ import type { OptionsInterface} from "~/Store/Store";
 import { useQuestionsStore } from "~/Store/Store";
 
 interface MultiChoiceProps {
-  // type: "Radio" | "Checkboxes";
+  type: "Radio" | "Checkboxes";
   // setQuestions: any;
   // questions: any;
   // options: any;
@@ -14,7 +14,7 @@ interface MultiChoiceProps {
 }
 
 export function MultiChoiceContent({
-  // type,
+  type,
   option,
   // setQuestions,
   // questions,
@@ -24,7 +24,7 @@ export function MultiChoiceContent({
   const setQuestionsArr = useQuestionsStore(state => state.setQuestions)
   const questionsArr = useQuestionsStore(state => state.questions)
   const currentQuestion = useQuestionsStore(state => state.currentQuestion)
-  const type = useQuestionsStore(state => state.type)
+  // const type = useQuestionsStore(state => state.type)
   let content;
   switch (type) {
     case "Radio":
