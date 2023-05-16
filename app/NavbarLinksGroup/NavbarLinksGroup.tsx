@@ -126,7 +126,7 @@ export function LinksGroup({
       className={cx(classes.link, {
         [classes.linkActive]: active === link.key,
       })}
-    ></NavLink>
+    >{" "}</NavLink>
     /*
     <Text<"a">
       component="a"

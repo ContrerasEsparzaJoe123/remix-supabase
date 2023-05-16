@@ -6,6 +6,7 @@ import type { DropResult } from "react-beautiful-dnd";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import { IconCirclePlus } from "@tabler/icons-react";
 import { useListState } from "@mantine/hooks";
+import { useQuestionsStore } from "~/Store/Store";
 export interface OptionsInterface {
   id: number;
   option: string;
@@ -26,12 +27,14 @@ export default function AppShellDemo() {
   const [questions, setQuestions] = useState<QuestionInterface[]>(
     listState || []
   );
+  const questionsArr = useQuestionsStore(state => state.questions)
+  const setQuestionsArr = useQuestionsStore(state => state.setQuestions)
 
   useEffect(() => {
-    setQuestions(listState);
-  }, [listState]);
+    setQuestionsArr(listState);
+  }, [listState, setQuestionsArr]);
 
-  console.log("Current questions:", questions);
+  console.log("Current questions:", questionsArr);
   const onDragEnd = (result: DropResult) => {
     if (!result.destination) return;
     const { destination } = result;
@@ -98,13 +101,13 @@ export default function AppShellDemo() {
               sx={{ overflowY: "auto" }}
             >
               {provided.placeholder}
-              {questions?.length > 0 &&
-                questions.map((element, index) => (
+              {questionsArr?.length > 0 &&
+                questionsArr.map((element, index) => (
                   <MainCard
-                    handlers={handlers}
-                    questions={questions}
-                    setQuestions={setQuestions}
-                    listState={listState}
+                    // handlers={handlers}
+                    // questions={questionsArr}
+                    // setQuestions={setQuestionsArr}
+                    // listState={listState}
                     questionData={element}
                     key={`${element}-${index}`}
                   />

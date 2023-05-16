@@ -9,6 +9,7 @@ import {
   ThemeIcon,
   Tabs,
 } from "@mantine/core";
+// import { useListState } from "@mantine/hooks";
 import {
   IconCheckbox,
   IconChevronDown,
@@ -26,24 +27,27 @@ import { useState } from "react";
 import type { answerType } from "~/AnswerContent/AnswerContent";
 import { AnswerContent } from "~/AnswerContent/AnswerContent";
 import type { QuestionInterface } from "~/Container/AppShell";
+import { useQuestionsStore } from "~/Store/Store";
 
 const useStyles = createStyles((theme) => ({}));
 export function MainCard(props: {
   questionData: QuestionInterface;
-  handlers: any;
-  listState: QuestionInterface[];
-  setQuestions: React.Dispatch<React.SetStateAction<QuestionInterface[]>>;
-  questions: QuestionInterface[];
+  // handlers: any;
+  // listState: QuestionInterface[];
+  // setQuestions: React.Dispatch<React.SetStateAction<QuestionInterface[]>>;
+  // questions: QuestionInterface[];
 }) {
   const { theme } = useStyles();
   const { questionData } = props;
   const [value, setValue] = useState<answerType | string>(
     questionData.type || "Radio"
   );
+  const setQuestionsArr = useQuestionsStore(state => state.setQuestions)
+  const questions = useQuestionsStore(state => state.questions)
 
   const showFilter = () => {
-    props.setQuestions(
-      props.handlers.filter(
+    setQuestionsArr(
+      questions.filter(
         (element: QuestionInterface) => element.id !== questionData.id
       )
     );
@@ -163,8 +167,8 @@ export function MainCard(props: {
           type={value}
           options={questionData.options}
           questionData={questionData}
-          questions={props.questions}
-          setQuestions={props.setQuestions}
+          // questions={props.questions}
+          // setQuestions={props.setQuestions}
         />
       </Card.Section>
     </Card>

@@ -14,6 +14,7 @@ import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { IconAt, IconGripVertical, IconCirclePlus } from "@tabler/icons-react";
 import { MultiChoiceContent } from "./MultiChoice";
 import type { OptionsInterface, QuestionInterface } from "~/Container/AppShell";
+import { useQuestionsStore } from "~/Store/Store";
 
 const useStyles = createStyles((theme) => ({
   item: {
@@ -65,16 +66,16 @@ export type answerType =
 export interface CardContentProps {
   type: answerType | string;
   options: OptionsInterface[];
-  setQuestions: React.Dispatch<React.SetStateAction<QuestionInterface[]>>;
-  questions: QuestionInterface[];
+  // setQuestions: React.Dispatch<React.SetStateAction<QuestionInterface[]>>;
+  // questions: QuestionInterface[];
   questionData: QuestionInterface;
 }
 
 export function AnswerContent({
   type,
   options,
-  setQuestions,
-  questions,
+  // setQuestions,
+  // questions,
   questionData,
 }: CardContentProps): JSX.Element {
   const { classes, cx } = useStyles();
@@ -83,6 +84,8 @@ export function AnswerContent({
   // let multiChoice: React.ReactNode;
   let answerContent: React.ReactNode;
   let multiChoice: (option: OptionsInterface) => JSX.Element;
+  const setQuestionsArr = useQuestionsStore(state => state.setQuestions)
+  const questionsArr = useQuestionsStore(state => state.questions)
 
   switch (type) {
     case "Radio":
@@ -92,9 +95,9 @@ export function AnswerContent({
           <MultiChoiceContent
             option={option}
             type={type}
-            questions={questions}
+            // questions={questions}
             questionData={questionData}
-            setQuestions={setQuestions}
+            // setQuestions={setQuestions}
             options={options}
           />
         );
@@ -109,9 +112,9 @@ export function AnswerContent({
           <MultiChoiceContent
             option={option}
             type={type}
-            questions={questions}
+            // questions={questions}
             questionData={questionData}
-            setQuestions={setQuestions}
+            // setQuestions={setQuestions}
             options={options}
           />
         );
@@ -163,7 +166,7 @@ export function AnswerContent({
       isCorrectAnswer: true,
     };
 
-    const myQuestions = questions.map((question) => {
+    const myQuestions = questionsArr.map((question) => {
       if (question.id === questionData.id) {
         question.options.push(newOption);
         return question;
@@ -172,7 +175,7 @@ export function AnswerContent({
       }
     });
 
-    setQuestions(myQuestions);
+    setQuestionsArr(myQuestions);
   };
 
   const items =
