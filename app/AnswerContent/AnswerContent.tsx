@@ -68,7 +68,7 @@ export interface CardContentProps {
   // options: OptionsInterface[];
   // setQuestions: React.Dispatch<React.SetStateAction<QuestionInterface[]>>;
   // questions: QuestionInterface[];
-  // questionData: QuestionInterface;
+  currentQuestion: QuestionInterface;
 }
 
 export function AnswerContent({
@@ -76,12 +76,12 @@ export function AnswerContent({
   // options,
   // setQuestions,
   // questions,
-  // questionData,
+  currentQuestion,
 }: CardContentProps): JSX.Element {
   const { classes, cx } = useStyles();
   const setQuestionsArr = useQuestionsStore(state => state.setQuestions)
   const questionsArr = useQuestionsStore(state => state.questions)
-  const currentQuestion = useQuestionsStore(state => state.currentQuestion)
+  // const currentQuestion = useQuestionsStore(state => state.currentQuestion)
   // const type = useQuestionsStore(state => state.type)
   const [, handlers] = useListState(currentQuestion.options);
   let isMultiChoice: boolean = false;
@@ -97,8 +97,8 @@ export function AnswerContent({
           <MultiChoiceContent
             option={option}
             type={type}
+            currentQuestion={currentQuestion}
             // questions={questions}
-            // questionData={questionData}
             // setQuestions={setQuestions}
             // options={options}
           />
@@ -114,8 +114,8 @@ export function AnswerContent({
           <MultiChoiceContent
             option={option}
             type={type}
+            currentQuestion={currentQuestion}
             // questions={questions}
-            // questionData={questionData}
             // setQuestions={setQuestions}
             // options={options}
           />

@@ -9,21 +9,21 @@ interface MultiChoiceProps {
   // setQuestions: any;
   // questions: any;
   // options: any;
-  // questionData: any;
+  currentQuestion: QuestionInterface;
   option: OptionsInterface;
 }
 
 export function MultiChoiceContent({
   type,
   option,
+  currentQuestion,
   // setQuestions,
   // questions,
   // options,
-  // questionData,
 }: MultiChoiceProps) {
   const setQuestionsArr = useQuestionsStore(state => state.setQuestions)
   const questionsArr = useQuestionsStore(state => state.questions)
-  const currentQuestion = useQuestionsStore(state => state.currentQuestion)
+  // const currentQuestion = useQuestionsStore(state => state.currentQuestion)
   // const type = useQuestionsStore(state => state.type)
   let content;
   switch (type) {

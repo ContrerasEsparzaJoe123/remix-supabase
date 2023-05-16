@@ -23,7 +23,7 @@ import {
   IconTool,
   IconTrashX,
 } from "@tabler/icons-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { answerType } from "~/AnswerContent/AnswerContent";
 import { AnswerContent } from "~/AnswerContent/AnswerContent";
 import type { QuestionInterface } from "~/Container/AppShell";
@@ -41,12 +41,13 @@ export function MainCard(props: {
   const { questionData } = props;
   const setQuestionsArr = useQuestionsStore(state => state.setQuestions)
   const questions = useQuestionsStore(state => state.questions)
-  const setCurrentQuestion = useQuestionsStore(state => state.setCurrentQuestion)
+  // const setCurrentQuestion = useQuestionsStore(state => state.setCurrentQuestion)
+  // const currentQuestion = useQuestionsStore(state => state.currentQuestion)
   // const setType = useQuestionsStore(state => state.setType)
   const [value, setValue] = useState<answerType | string>(
     questionData.type || "Radio"
   );
-  setCurrentQuestion(questionData)
+
   const showFilter = () => {
     setQuestionsArr(
       questions.filter(
@@ -169,7 +170,7 @@ export function MainCard(props: {
         <AnswerContent
           type={value}
           // options={questionData.options}
-          // questionData={questionData}
+          currentQuestion={questionData}
           // questions={props.questions}
           // setQuestions={props.setQuestions}
         />
