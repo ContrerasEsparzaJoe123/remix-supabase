@@ -5,6 +5,12 @@ export interface OptionsInterface {
   isCorrectAnswer: boolean;
 }
 
+export type answerType =
+  | "Radio"
+  | "Checkboxes"
+  | "Short Answer"
+  | "Long Answer"
+  | "Email";
 export interface QuestionInterface {
   id: number;
   question: string;
@@ -13,6 +19,8 @@ export interface QuestionInterface {
 }
 interface StoreInterface {
     number: number;
+    type: answerType;
+    setType: (type: answerType) => void;
     increaseCounterNumber: () => void;
     questions: QuestionInterface[];
     setQuestions: (questions: QuestionInterface[]) => void;
@@ -22,6 +30,8 @@ interface StoreInterface {
 export const useQuestionsStore = create<StoreInterface>((set) => (
     {
         number: 0,
+        type: "Radio",
+        setType: (type: answerType) => set((state) => ({ type: type })),
         increaseCounterNumber: () => set((state) => ({ number: state.number + 1 })),
         questions: [],
         setQuestions: (questions: QuestionInterface[]) => set((state) => ({ questions: questions })),

@@ -64,7 +64,7 @@ export type answerType =
   | "Long Answer"
   | "Email";
 export interface CardContentProps {
-  type: answerType | string;
+  // type: answerType | string;
   // options: OptionsInterface[];
   // setQuestions: React.Dispatch<React.SetStateAction<QuestionInterface[]>>;
   // questions: QuestionInterface[];
@@ -72,7 +72,7 @@ export interface CardContentProps {
 }
 
 export function AnswerContent({
-  type,
+  // type,
   // options,
   // setQuestions,
   // questions,
@@ -82,6 +82,7 @@ export function AnswerContent({
   const setQuestionsArr = useQuestionsStore(state => state.setQuestions)
   const questionsArr = useQuestionsStore(state => state.questions)
   const currentQuestion = useQuestionsStore(state => state.currentQuestion)
+  const type = useQuestionsStore(state => state.type)
   const [, handlers] = useListState(currentQuestion.options);
   let isMultiChoice: boolean = false;
   // let multiChoice: React.ReactNode;
@@ -95,7 +96,7 @@ export function AnswerContent({
         return (
           <MultiChoiceContent
             option={option}
-            type={type}
+            // type={type}
             // questions={questions}
             // questionData={questionData}
             // setQuestions={setQuestions}
@@ -112,7 +113,7 @@ export function AnswerContent({
         return (
           <MultiChoiceContent
             option={option}
-            type={type}
+            // type={type}
             // questions={questions}
             // questionData={questionData}
             // setQuestions={setQuestions}

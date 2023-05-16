@@ -42,6 +42,7 @@ export function MainCard(props: {
   const setQuestionsArr = useQuestionsStore(state => state.setQuestions)
   const questions = useQuestionsStore(state => state.questions)
   const setCurrentQuestion = useQuestionsStore(state => state.setCurrentQuestion)
+  const setType = useQuestionsStore(state => state.setType)
   const [value, setValue] = useState<answerType | string>(
     questionData.type || "Radio"
   );
@@ -151,7 +152,10 @@ export function MainCard(props: {
                 ) : null
               }
               value={value}
-              onChange={(value: answerType) => setValue(value)}
+              onChange={(value: answerType) => {
+                setValue(value)
+                setType(value)
+              }}
               data={[
                 "Radio",
                 "Checkboxes",
@@ -165,7 +169,7 @@ export function MainCard(props: {
       </Card.Section>
       <Card.Section>
         <AnswerContent
-          type={value}
+          // type={value}
           // options={questionData.options}
           // questionData={questionData}
           // questions={props.questions}
