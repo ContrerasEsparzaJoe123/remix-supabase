@@ -102,11 +102,11 @@ export function LinksGroup({
   const [active, setActive] = useState(0);
   const ChevronIcon = theme.dir === "ltr" ? IconChevronRight : IconChevronLeft;
   const items = (hasLinks ? links : []).map((link, index) => (
+    // eslint-disable-next-line jsx-a11y/anchor-has-content
     <NavLink
       key={link.label}
       active={link.key === active}
       label={link.label}
-      description="asdfa"
       // description={item.description}
       // rightSection={item.rightSection}
       // icon={<item.icon size="1rem" stroke={1.5} />}
@@ -126,7 +126,7 @@ export function LinksGroup({
       className={cx(classes.link, {
         [classes.linkActive]: active === link.key,
       })}
-    >{" "}</NavLink>
+    ></NavLink>
     /*
     <Text<"a">
       component="a"

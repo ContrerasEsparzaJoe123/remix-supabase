@@ -65,27 +65,28 @@ export type answerType =
   | "Email";
 export interface CardContentProps {
   type: answerType | string;
-  options: OptionsInterface[];
+  // options: OptionsInterface[];
   // setQuestions: React.Dispatch<React.SetStateAction<QuestionInterface[]>>;
   // questions: QuestionInterface[];
-  questionData: QuestionInterface;
+  // questionData: QuestionInterface;
 }
 
 export function AnswerContent({
   type,
-  options,
+  // options,
   // setQuestions,
   // questions,
-  questionData,
+  // questionData,
 }: CardContentProps): JSX.Element {
   const { classes, cx } = useStyles();
-  const [, handlers] = useListState(options);
+  const setQuestionsArr = useQuestionsStore(state => state.setQuestions)
+  const questionsArr = useQuestionsStore(state => state.questions)
+  const currentQuestion = useQuestionsStore(state => state.currentQuestion)
+  const [, handlers] = useListState(currentQuestion.options);
   let isMultiChoice: boolean = false;
   // let multiChoice: React.ReactNode;
   let answerContent: React.ReactNode;
   let multiChoice: (option: OptionsInterface) => JSX.Element;
-  const setQuestionsArr = useQuestionsStore(state => state.setQuestions)
-  const questionsArr = useQuestionsStore(state => state.questions)
 
   switch (type) {
     case "Radio":
@@ -96,9 +97,9 @@ export function AnswerContent({
             option={option}
             type={type}
             // questions={questions}
-            questionData={questionData}
+            // questionData={questionData}
             // setQuestions={setQuestions}
-            options={options}
+            // options={options}
           />
         );
       };
@@ -113,9 +114,9 @@ export function AnswerContent({
             option={option}
             type={type}
             // questions={questions}
-            questionData={questionData}
+            // questionData={questionData}
             // setQuestions={setQuestions}
-            options={options}
+            // options={options}
           />
         );
       };
@@ -167,7 +168,7 @@ export function AnswerContent({
     };
 
     const myQuestions = questionsArr.map((question) => {
-      if (question.id === questionData.id) {
+      if (question.id === currentQuestion.id) {
         question.options.push(newOption);
         return question;
       } else {
@@ -179,8 +180,8 @@ export function AnswerContent({
   };
 
   const items =
-    options?.length > 0 ? (
-      options.map((item, index) => (
+    currentQuestion.options?.length > 0 ? (
+      currentQuestion.options.map((item, index) => (
         <Draggable
           key={item.id}
           index={index}

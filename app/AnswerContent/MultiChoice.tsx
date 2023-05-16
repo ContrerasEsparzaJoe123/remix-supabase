@@ -1,15 +1,16 @@
 import { ActionIcon, Checkbox, Flex, Radio, TextInput } from "@mantine/core";
 import { IconMinus, IconPlus } from "@tabler/icons-react";
 import type { QuestionInterface } from "~/Container/AppShell";
+import type { OptionsInterface} from "~/Store/Store";
 import { useQuestionsStore } from "~/Store/Store";
 
 interface MultiChoiceProps {
   type: "Radio" | "Checkboxes";
   // setQuestions: any;
   // questions: any;
-  options: any;
-  questionData: any;
-  option: any;
+  // options: any;
+  // questionData: any;
+  option: OptionsInterface;
 }
 
 export function MultiChoiceContent({
@@ -17,11 +18,12 @@ export function MultiChoiceContent({
   option,
   // setQuestions,
   // questions,
-  options,
-  questionData,
+  // options,
+  // questionData,
 }: MultiChoiceProps) {
   const setQuestionsArr = useQuestionsStore(state => state.setQuestions)
   const questionsArr = useQuestionsStore(state => state.questions)
+  const currentQuestion = useQuestionsStore(state => state.currentQuestion)
   let content;
   switch (type) {
     case "Radio":
@@ -40,7 +42,7 @@ export function MultiChoiceContent({
     };
 
     const myQuestions = questionsArr.map((question: QuestionInterface) => {
-      if (question.id === questionData.id) {
+      if (question.id === currentQuestion.id) {
         question.options.push(newOption);
         return question;
       } else {
@@ -53,7 +55,7 @@ export function MultiChoiceContent({
 
   const removeOption = () => {
     const myQuestions = questionsArr.map((question: QuestionInterface) => {
-      if (question.id === questionData.id) {
+      if (question.id === currentQuestion.id) {
         const newQuestion = {
           ...question,
           options: question.options.filter(

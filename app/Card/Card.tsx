@@ -39,12 +39,13 @@ export function MainCard(props: {
 }) {
   const { theme } = useStyles();
   const { questionData } = props;
+  const setQuestionsArr = useQuestionsStore(state => state.setQuestions)
+  const questions = useQuestionsStore(state => state.questions)
+  const setCurrentQuestion = useQuestionsStore(state => state.setCurrentQuestion)
   const [value, setValue] = useState<answerType | string>(
     questionData.type || "Radio"
   );
-  const setQuestionsArr = useQuestionsStore(state => state.setQuestions)
-  const questions = useQuestionsStore(state => state.questions)
-
+  setCurrentQuestion(questionData)
   const showFilter = () => {
     setQuestionsArr(
       questions.filter(
@@ -165,8 +166,8 @@ export function MainCard(props: {
       <Card.Section>
         <AnswerContent
           type={value}
-          options={questionData.options}
-          questionData={questionData}
+          // options={questionData.options}
+          // questionData={questionData}
           // questions={props.questions}
           // setQuestions={props.setQuestions}
         />
