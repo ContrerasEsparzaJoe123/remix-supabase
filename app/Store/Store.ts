@@ -12,6 +12,13 @@ export type answerType =
   | "Short Answer"
   | "Long Answer"
   | "Email";
+export interface Question {
+  id: string;
+  created_at: string
+  question: string;
+  type: string;
+  options: OptionsInterface[];
+}
 export interface QuestionInterface {
   id: number;
   question: string;

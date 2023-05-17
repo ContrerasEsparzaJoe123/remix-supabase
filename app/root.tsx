@@ -10,6 +10,7 @@ import {
 import { createEmotionCache, MantineProvider } from "@mantine/core";
 import { StylesPlaceholder } from "@mantine/remix";
 import { theme } from "./theme";
+import { QueryClient, QueryClientProvider } from "react-query";
 
 export const meta: MetaFunction = () => ({
   charset: "utf-8",
@@ -19,8 +20,18 @@ export const meta: MetaFunction = () => ({
 
 createEmotionCache({ key: "mantine" });
 
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: false,
+      refetchOnWindowFocus: false,
+    },
+  },
+})
+
 export default function App() {
   return (
+    <QueryClientProvider client={queryClient}>
     <MantineProvider theme={theme} withGlobalStyles withNormalizeCSS>
       <html lang="en">
         <head>
@@ -36,5 +47,6 @@ export default function App() {
         </body>
       </html>
     </MantineProvider>
+    </QueryClientProvider> 
   );
 }
