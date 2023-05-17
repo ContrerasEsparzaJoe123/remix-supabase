@@ -34,7 +34,7 @@ export function MainCard(props: {
   questionData: QuestionInterface;
   handlers: any;
   listState: QuestionInterface[];
-  setQuestions: React.Dispatch<React.SetStateAction<QuestionInterface[]>>;
+  setQuestions: (questions: QuestionInterface[]) => void;
   questions: QuestionInterface[];
 }) {
   const { theme } = useStyles();
