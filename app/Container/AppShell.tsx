@@ -53,7 +53,7 @@ export default function AppShellDemo() {
     }
   };
 
-  const onAddNewQuestion = () => {setQuestionsArr;
+  const onAddNewQuestion = () => {
     const newQuestion = {
       id: Math.floor(Math.random() * 999),
       question: "On add new question",

@@ -1,14 +1,11 @@
 import { ActionIcon, Checkbox, Flex, Radio, TextInput } from "@mantine/core";
 import { IconMinus, IconPlus } from "@tabler/icons-react";
 import type { QuestionInterface } from "~/Container/AppShell";
-import type { OptionsInterface} from "~/Store/Store";
+import type { OptionsInterface } from "~/Store/Store";
 import { useQuestionsStore } from "~/Store/Store";
 
 interface MultiChoiceProps {
   type: "Radio" | "Checkboxes";
-  // setQuestions: any;
-  // questions: any;
-  // options: any;
   currentQuestion: QuestionInterface;
   option: OptionsInterface;
 }
@@ -17,14 +14,10 @@ export function MultiChoiceContent({
   type,
   option,
   currentQuestion,
-  // setQuestions,
-  // questions,
-  // options,
 }: MultiChoiceProps) {
-  const setQuestionsArr = useQuestionsStore(state => state.setQuestions)
-  const questionsArr = useQuestionsStore(state => state.questions)
-  // const currentQuestion = useQuestionsStore(state => state.currentQuestion)
-  // const type = useQuestionsStore(state => state.type)
+  const setQuestionsArr = useQuestionsStore((state) => state.setQuestions);
+  const questionsArr = useQuestionsStore((state) => state.questions);
+
   let content;
   switch (type) {
     case "Radio":
@@ -42,34 +35,62 @@ export function MultiChoiceContent({
       isCorrectAnswer: true,
     };
 
-    const myQuestions = questionsArr.map((question: QuestionInterface) => {
+    const updatedQuestions = questionsArr.map((question) => {
       if (question.id === currentQuestion.id) {
-        question.options.push(newOption);
-        return question;
+        return {
+          ...question,
+          options: [...question.options, newOption],
+        };
       } else {
         return question;
       }
     });
 
-    setQuestionsArr(myQuestions);
+    setQuestionsArr(updatedQuestions);
   };
 
   const removeOption = () => {
-    const myQuestions = questionsArr.map((question: QuestionInterface) => {
+    const updatedQuestions = questionsArr.map((question) => {
       if (question.id === currentQuestion.id) {
-        const newQuestion = {
+        return {
           ...question,
           options: question.options.filter(
             (element) => element.id !== option.id
           ),
         };
-        return newQuestion;
       } else {
         return question;
       }
     });
 
-    setQuestionsArr(myQuestions);
+    setQuestionsArr(updatedQuestions);
+  };
+
+  const updateOption = (newValue: string) => {
+    const updatedQuestions = questionsArr.map((question) => {
+      if (question.id === currentQuestion.id) {
+        const updatedOptions = question.options.map((opt) => {
+          if (opt.id === option.id) {
+            return {
+              ...opt,
+              option: newValue,
+              isCorrectAnswer: false,
+            };
+          } else {
+            return opt;
+          }
+        });
+
+        return {
+          ...question,
+          options: updatedOptions,
+        };
+      } else {
+        return question;
+      }
+    });
+
+    setQuestionsArr(updatedQuestions);
   };
 
   return (
@@ -81,6 +102,8 @@ export function MultiChoiceContent({
         radius="md"
         sx={{ input: { backgroundColor: "transparent" } }}
         w="32rem"
+        value={option.option}
+        onChange={(event) => updateOption(event.currentTarget.value)}
       />
       <ActionIcon
         color="dark"
