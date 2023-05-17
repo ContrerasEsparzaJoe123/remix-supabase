@@ -41,11 +41,7 @@ export function MainCard(props: {
   const { questionData } = props;
   const setQuestionsArr = useQuestionsStore((state) => state.setQuestions);
   const questions = useQuestionsStore((state) => state.questions);
-  const setCurrentQuestion = useQuestionsStore(
-    (state) => state.setCurrentQuestion
-  );
-  const currentQuestion = useQuestionsStore((state) => state.currentQuestion);
-  const setType = useQuestionsStore((state) => state.setType);
+
   const [value, setValue] = useState<answerType | string>(
     questionData.type || "Radio"
   );

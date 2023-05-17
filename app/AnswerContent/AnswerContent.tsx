@@ -79,8 +79,8 @@ export function AnswerContent({
   currentQuestion,
 }: CardContentProps): JSX.Element {
   const { classes, cx } = useStyles();
-  const setQuestionsArr = useQuestionsStore(state => state.setQuestions)
-  const questionsArr = useQuestionsStore(state => state.questions)
+  const setQuestionsArr = useQuestionsStore((state) => state.setQuestions);
+  const questionsArr = useQuestionsStore((state) => state.questions);
   // const currentQuestion = useQuestionsStore(state => state.currentQuestion)
   // const type = useQuestionsStore(state => state.type)
   const [, handlers] = useListState(currentQuestion.options);
@@ -133,6 +133,26 @@ export function AnswerContent({
           minRows={2}
           maxRows={4}
           radius="md"
+          onChange={(event) => {
+            const updatedOption = {
+              id: currentQuestion.options[0].id, // Assuming there's only one option in the currentQuestion.options array
+              option: event.currentTarget.value,
+              isCorrectAnswer: false, // Set the initial value of isCorrectAnswer as needed
+            };
+
+            const updatedQuestions = questionsArr.map((question) => {
+              if (question.id === currentQuestion.id) {
+                return {
+                  ...question,
+                  options: [updatedOption],
+                };
+              } else {
+                return question;
+              }
+            });
+
+            setQuestionsArr(updatedQuestions);
+          }}
         />
       );
       break;
@@ -145,6 +165,26 @@ export function AnswerContent({
           minRows={6}
           maxRows={6}
           radius="md"
+          onChange={(event) => {
+            const updatedOption = {
+              id: currentQuestion.options[0].id, // Assuming there's only one option in the currentQuestion.options array
+              option: event.currentTarget.value,
+              isCorrectAnswer: false, // Set the initial value of isCorrectAnswer as needed
+            };
+
+            const updatedQuestions = questionsArr.map((question) => {
+              if (question.id === currentQuestion.id) {
+                return {
+                  ...question,
+                  options: [updatedOption],
+                };
+              } else {
+                return question;
+              }
+            });
+
+            setQuestionsArr(updatedQuestions);
+          }}
         />
       );
       break;
@@ -156,6 +196,26 @@ export function AnswerContent({
           placeholder="Enter email"
           radius="md"
           icon={<IconAt size="0.8rem" />}
+          onChange={(event) => {
+            const updatedOption = {
+              id: currentQuestion.options[0].id, // Assuming there's only one option in the currentQuestion.options array
+              option: event.currentTarget.value,
+              isCorrectAnswer: false, // Set the initial value of isCorrectAnswer as needed
+            };
+
+            const updatedQuestions = questionsArr.map((question) => {
+              if (question.id === currentQuestion.id) {
+                return {
+                  ...question,
+                  options: [updatedOption],
+                };
+              } else {
+                return question;
+              }
+            });
+
+            setQuestionsArr(updatedQuestions);
+          }}
         />
       );
       break;

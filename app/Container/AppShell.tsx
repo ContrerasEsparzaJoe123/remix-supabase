@@ -24,12 +24,6 @@ export default function AppShellDemo() {
   const opened = false;
   const burgerOpen = false;
   const [listState, handlers] = useListState<QuestionInterface>([]);
-  /*   const [questions, setQuestions] = useState<QuestionInterface[]>(
-    listState || []
-  ); */
-  /*  const [questionsArr, setQuestionsArr] = useQuestionsStore(
-    (state) => [state.questions, state.setQuestions]
-  ) */
   const questionsArr = useQuestionsStore((state) => state.questions);
   const setQuestionsArr = useQuestionsStore((state) => state.setQuestions);
 
