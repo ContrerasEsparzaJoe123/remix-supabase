@@ -7,6 +7,7 @@ import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import { IconCirclePlus, IconSend } from "@tabler/icons-react";
 import { useListState } from "@mantine/hooks";
 import { useQuestionsStore } from "~/Store/Store";
+import { supabase } from "~/DB/supabase";
 export interface OptionsInterface {
   id: number;
   option: string;
@@ -32,6 +33,7 @@ export default function AppShellDemo() {
   }, [listState, setQuestionsArr]);
 
   console.log("Current questions:", questionsArr);
+
   const onDragEnd = (result: DropResult) => {
     if (!result.destination) return;
     const { destination } = result;
@@ -48,9 +50,9 @@ export default function AppShellDemo() {
         },
       ],
     };
-    if (destination.droppableId === "dnd-list2") {
-      handlers.append(newQuestion);
-    }
+
+    const updatedQuestions = [...questionsArr, newQuestion];
+    setQuestionsArr(updatedQuestions);
   };
 
   const onAddNewQuestion = () => {
@@ -66,13 +68,36 @@ export default function AppShellDemo() {
         },
       ],
     };
-
-    handlers.append(newQuestion);
+    const updatedQuestions = [...questionsArr, newQuestion];
+    setQuestionsArr(updatedQuestions);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     // console log all the fields I've inputted
     console.log("Questions:", questionsArr);
+
+    const queryArray = questionsArr.map((question) => {
+      return {
+        question: question.question,
+        type: question.type,
+        options: question.options,
+      };
+    });
+    console.log(
+      "🚀 ~ file: AppShell.tsx:85 ~ queryArray ~ queryArray:\n",
+      queryArray
+    );
+
+    const { data, error } = await supabase
+      .from("questions")
+      .insert(questionsArr);
+
+    if (error) {
+      console.log("Error:", error);
+    }
+    else if (data) {
+      console.log("Data:", data);
+    }
   };
 
   return (
@@ -107,10 +132,10 @@ export default function AppShellDemo() {
               {questionsArr?.length > 0 &&
                 questionsArr.map((element, index) => (
                   <MainCard
-                    handlers={handlers}
-                    questions={questionsArr}
-                    setQuestions={setQuestionsArr}
-                    listState={listState}
+                    // handlers={handlers}
+                    // questions={questionsArr}
+                    // setQuestions={setQuestionsArr}
+                    // listState={listState}
                     questionData={element}
                     key={`${element}-${index}`}
                   />

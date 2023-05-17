@@ -32,10 +32,10 @@ import { useQuestionsStore } from "~/Store/Store";
 const useStyles = createStyles((theme) => ({}));
 export function MainCard(props: {
   questionData: QuestionInterface;
-  handlers: any;
-  listState: QuestionInterface[];
-  setQuestions: (questions: QuestionInterface[]) => void;
-  questions: QuestionInterface[];
+  // handlers: any;
+  // listState: QuestionInterface[];
+  // setQuestions: (questions: QuestionInterface[]) => void;
+  // questions: QuestionInterface[];
 }) {
   const { theme } = useStyles();
   const { questionData } = props;
