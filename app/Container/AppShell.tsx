@@ -1,5 +1,12 @@
-import { useEffect } from "react";
-import { AppShell, useMantineTheme, Flex, Button } from "@mantine/core";
+import { useEffect, useState } from "react";
+import {
+  AppShell,
+  useMantineTheme,
+  Flex,
+  Button,
+  LoadingOverlay,
+  Box,
+} from "@mantine/core";
 import NavbarNested from "~/Navbar/Navbar";
 import { MainCard } from "~/Card/Card";
 import type { DropResult } from "react-beautiful-dnd";
@@ -27,6 +34,7 @@ export default function AppShellDemo() {
   const [listState, handlers] = useListState<QuestionInterface>([]);
   const questionsArr = useQuestionsStore((state) => state.questions);
   const setQuestionsArr = useQuestionsStore((state) => state.setQuestions);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     setQuestionsArr(listState);
@@ -36,8 +44,6 @@ export default function AppShellDemo() {
 
   const onDragEnd = (result: DropResult) => {
     if (!result.destination) return;
-    const { destination } = result;
-
     const newQuestion: QuestionInterface = {
       id: Math.floor(Math.random() * 999),
       question: "On drag question added",
@@ -46,7 +52,7 @@ export default function AppShellDemo() {
         {
           id: Math.floor(Math.random() * 999),
           option: "Carbon",
-          isCorrectAnswer: true,
+          isCorrectAnswer: false,
         },
       ],
     };
@@ -64,7 +70,7 @@ export default function AppShellDemo() {
         {
           id: Math.floor(Math.random() * 999),
           option: "Carbon",
-          isCorrectAnswer: true,
+          isCorrectAnswer: false,
         },
       ],
     };
@@ -80,7 +86,13 @@ export default function AppShellDemo() {
       return {
         question: question.question,
         type: question.type,
-        options: question.options,
+        //remove id from every option
+        options: question.options.map((option) => {
+          return {
+            option: option.option,
+            isCorrectAnswer: option.isCorrectAnswer,
+          };
+        }),
       };
     });
     console.log(
@@ -88,75 +100,85 @@ export default function AppShellDemo() {
       queryArray
     );
 
-    const { data, error } = await supabase
-      .from("questions")
-      .insert(questionsArr);
+    try {
+      setIsLoading(true);
 
-    if (error) {
+      const { data, error } = await supabase
+        .from("questions")
+        .insert(queryArray);
+
+      if (error) {
+        console.log("Error:", error);
+      } else if (data) {
+        console.log("Data:", data);
+      }
+    } catch (error) {
       console.log("Error:", error);
-    }
-    else if (data) {
-      console.log("Data:", data);
+    } finally {
+      setQuestionsArr([]);
+      setIsLoading(false);
     }
   };
 
   return (
-    <DragDropContext onDragEnd={onDragEnd}>
-      <AppShell
-        hidden={burgerOpen}
-        styles={{
-          main: {
-            background:
-              theme.colorScheme === "dark" ? theme.colors.dark[8] : theme.white,
-          },
-        }}
-        navbarOffsetBreakpoint="sm"
-        asideOffsetBreakpoint="sm"
-        navbar={<NavbarNested opened={opened} />}
-      >
-        <Droppable droppableId="dnd-list2" direction="horizontal">
-          {(provided) => (
-            <Flex
-              {...provided.droppableProps}
-              ref={provided.innerRef}
-              mih="100vh"
-              mx="auto"
-              direction="column"
-              gap="10px"
-              p={{ base: "sm", sm: "md", lg: "50px" }}
-              justify="center"
-              align="center"
-              sx={{ overflowY: "auto" }}
-            >
-              {provided.placeholder}
-              {questionsArr?.length > 0 &&
-                questionsArr.map((element, index) => (
-                  <MainCard
-                    // handlers={handlers}
-                    // questions={questionsArr}
-                    // setQuestions={setQuestionsArr}
-                    // listState={listState}
-                    questionData={element}
-                    key={`${element}-${index}`}
-                  />
-                ))}
+    <Box pos="relative">
+      <DragDropContext onDragEnd={onDragEnd}>
+        <LoadingOverlay visible={isLoading} />
 
-              <Button w="100%" variant="default" onClick={onAddNewQuestion}>
-                <Flex align="center" gap="5px">
-                  <IconCirclePlus />
-                  Add Question
-                </Flex>
-              </Button>
-              <Button w="100%" variant="default" onClick={handleSubmit}>
-                <Flex align="center" gap="5px">
-                  <IconSend />
-                  Submit
-                </Flex>
-              </Button>
-            </Flex>
-          )}
-        </Droppable>
-      </AppShell>
-    </DragDropContext>
+        <AppShell
+          hidden={burgerOpen}
+          styles={{
+            main: {
+              background:
+                theme.colorScheme === "dark"
+                  ? theme.colors.dark[8]
+                  : theme.white,
+            },
+          }}
+          navbarOffsetBreakpoint="sm"
+          asideOffsetBreakpoint="sm"
+          navbar={<NavbarNested opened={opened} />}
+        >
+          <Droppable droppableId="dnd-list2" direction="horizontal">
+            {(provided) => (
+              <Flex
+                {...provided.droppableProps}
+                ref={provided.innerRef}
+                mih="100vh"
+                mx="auto"
+                direction="column"
+                gap="10px"
+                p={{ base: "sm", sm: "md", lg: "50px" }}
+                justify="center"
+                align="center"
+                sx={{ overflowY: "auto" }}
+              >
+                {provided.placeholder}
+                {questionsArr?.length > 0 &&
+                  questionsArr.map((element, index) => (
+                    <MainCard
+                      questionData={element}
+                      key={`${element}-${index}`}
+                    />
+                  ))}
+
+                <Button w="100%" variant="default" onClick={onAddNewQuestion}>
+                  <Flex align="center" gap="5px">
+                    <IconCirclePlus />
+                    Add Question
+                  </Flex>
+                </Button>
+                <Button w="100%" variant="default" onClick={handleSubmit}>
+                  <Flex align="center" gap="5px">
+                    <IconSend />
+                    Submit
+                  </Flex>
+                </Button>
+              </Flex>
+            )}
+          </Droppable>
+        </AppShell>
+      </DragDropContext>
+    </Box>
   );
 }

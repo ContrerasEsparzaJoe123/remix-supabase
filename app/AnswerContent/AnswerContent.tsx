@@ -225,7 +225,7 @@ export function AnswerContent({
     const newOption = {
       id: Math.floor(Math.random() * 999),
       option: "Pluton",
-      isCorrectAnswer: true,
+      isCorrectAnswer: false,
     };
 
     const myQuestions = questionsArr.map((question) => {

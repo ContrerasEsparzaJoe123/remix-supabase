@@ -32,7 +32,7 @@ export function MultiChoiceContent({
     const newOption = {
       id: Math.floor(Math.random() * 999),
       option: "Pluton",
-      isCorrectAnswer: true,
+      isCorrectAnswer: false,
     };
 
     const updatedQuestions = questionsArr.map((question) => {
