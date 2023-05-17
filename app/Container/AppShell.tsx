@@ -4,7 +4,7 @@ import NavbarNested from "~/Navbar/Navbar";
 import { MainCard } from "~/Card/Card";
 import type { DropResult } from "react-beautiful-dnd";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
-import { IconCirclePlus } from "@tabler/icons-react";
+import { IconCirclePlus, IconSend } from "@tabler/icons-react";
 import { useListState } from "@mantine/hooks";
 import { useQuestionsStore } from "~/Store/Store";
 export interface OptionsInterface {
@@ -24,14 +24,14 @@ export default function AppShellDemo() {
   const opened = false;
   const burgerOpen = false;
   const [listState, handlers] = useListState<QuestionInterface>([]);
-/*   const [questions, setQuestions] = useState<QuestionInterface[]>(
+  /*   const [questions, setQuestions] = useState<QuestionInterface[]>(
     listState || []
   ); */
-/*  const [questionsArr, setQuestionsArr] = useQuestionsStore(
+  /*  const [questionsArr, setQuestionsArr] = useQuestionsStore(
     (state) => [state.questions, state.setQuestions]
   ) */
-  const questionsArr = useQuestionsStore(state => state.questions)
-  const setQuestionsArr = useQuestionsStore(state => state.setQuestions)
+  const questionsArr = useQuestionsStore((state) => state.questions);
+  const setQuestionsArr = useQuestionsStore((state) => state.setQuestions);
 
   useEffect(() => {
     setQuestionsArr(listState);
@@ -44,7 +44,7 @@ export default function AppShellDemo() {
 
     const newQuestion: QuestionInterface = {
       id: Math.floor(Math.random() * 999),
-      question: "What is the atomic number of Carbon?",
+      question: "On drag question added",
       type: result.draggableId,
       options: [
         {
@@ -58,10 +58,11 @@ export default function AppShellDemo() {
       handlers.append(newQuestion);
     }
   };
-  const onAddNewQuestion = () => {
+
+  const onAddNewQuestion = () => {setQuestionsArr;
     const newQuestion = {
       id: Math.floor(Math.random() * 999),
-      question: "What is the atomic number of Carbon?",
+      question: "On add new question",
       type: "Radio",
       options: [
         {
@@ -73,6 +74,11 @@ export default function AppShellDemo() {
     };
 
     handlers.append(newQuestion);
+  };
+
+  const handleSubmit = () => {
+    // console log all the fields I've inputted
+    console.log("Questions:", questionsArr);
   };
 
   return (
@@ -107,10 +113,10 @@ export default function AppShellDemo() {
               {questionsArr?.length > 0 &&
                 questionsArr.map((element, index) => (
                   <MainCard
-                    // handlers={handlers}
-                    // questions={questionsArr}
-                    // setQuestions={setQuestionsArr}
-                    // listState={listState}
+                    handlers={handlers}
+                    questions={questionsArr}
+                    setQuestions={setQuestionsArr}
+                    listState={listState}
                     questionData={element}
                     key={`${element}-${index}`}
                   />
@@ -120,6 +126,12 @@ export default function AppShellDemo() {
                 <Flex align="center" gap="5px">
                   <IconCirclePlus />
                   Add Question
+                </Flex>
+              </Button>
+              <Button w="100%" variant="default" onClick={handleSubmit}>
+                <Flex align="center" gap="5px">
+                  <IconSend />
+                  Submit
                 </Flex>
               </Button>
             </Flex>

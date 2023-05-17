@@ -32,18 +32,20 @@ import { useQuestionsStore } from "~/Store/Store";
 const useStyles = createStyles((theme) => ({}));
 export function MainCard(props: {
   questionData: QuestionInterface;
-  // handlers: any;
-  // listState: QuestionInterface[];
-  // setQuestions: React.Dispatch<React.SetStateAction<QuestionInterface[]>>;
-  // questions: QuestionInterface[];
+  handlers: any;
+  listState: QuestionInterface[];
+  setQuestions: React.Dispatch<React.SetStateAction<QuestionInterface[]>>;
+  questions: QuestionInterface[];
 }) {
   const { theme } = useStyles();
   const { questionData } = props;
-  const setQuestionsArr = useQuestionsStore(state => state.setQuestions)
-  const questions = useQuestionsStore(state => state.questions)
-  // const setCurrentQuestion = useQuestionsStore(state => state.setCurrentQuestion)
-  // const currentQuestion = useQuestionsStore(state => state.currentQuestion)
-  // const setType = useQuestionsStore(state => state.setType)
+  const setQuestionsArr = useQuestionsStore((state) => state.setQuestions);
+  const questions = useQuestionsStore((state) => state.questions);
+  const setCurrentQuestion = useQuestionsStore(
+    (state) => state.setCurrentQuestion
+  );
+  const currentQuestion = useQuestionsStore((state) => state.currentQuestion);
+  const setType = useQuestionsStore((state) => state.setType);
   const [value, setValue] = useState<answerType | string>(
     questionData.type || "Radio"
   );
@@ -96,6 +98,19 @@ export function MainCard(props: {
             <Input
               icon={<IconQuestionMark />}
               placeholder="Enter your question"
+              defaultValue={questionData.question}
+              onChange={(event) => {
+                setQuestionsArr(
+                  questions.map((element: QuestionInterface) => {
+                    if (element.id === questionData.id) {
+                      element.question = event.currentTarget.value;
+                      return element;
+                    } else {
+                      return element;
+                    }
+                  })
+                );
+              }}
               radius="md"
               size="md"
               sx={(theme) => ({
@@ -154,7 +169,7 @@ export function MainCard(props: {
                 ) : null
               }
               value={value}
-              onChange={(value: answerType) => setValue(value) }
+              onChange={(value: answerType) => setValue(value)}
               data={[
                 "Radio",
                 "Checkboxes",
