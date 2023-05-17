@@ -23,7 +23,7 @@ import {
   IconTool,
   IconTrashX,
 } from "@tabler/icons-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import type { answerType } from "~/AnswerContent/AnswerContent";
 import { AnswerContent } from "~/AnswerContent/AnswerContent";
 import type { QuestionInterface } from "~/Container/AppShell";

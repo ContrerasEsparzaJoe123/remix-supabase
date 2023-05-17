@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { AppShell, useMantineTheme, Flex, Button } from "@mantine/core";
 import NavbarNested from "~/Navbar/Navbar";
 import { MainCard } from "~/Card/Card";

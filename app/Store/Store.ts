@@ -27,8 +27,6 @@ export interface QuestionInterface {
 }
 interface StoreInterface {
   number: number;
-  // type: answerType;
-  // setType: (type: answerType) => void;
   increaseCounterNumber: () => void;
   questions: QuestionInterface[];
   setQuestions: (questions: QuestionInterface[]) => void;
@@ -60,14 +58,3 @@ export const useQuestionsStore = create<StoreInterface>()(
     }
   )
 );
-
-const Questions = [
-  {
-    id: 1,
-    question: "This is a quesiton",
-    options: [
-      { id: 1, option: "Option1", isCorrectAnswer: false },
-      { id: 2, option: "Option2", isCorrectAnswer: true },
-    ],
-  },
-];
